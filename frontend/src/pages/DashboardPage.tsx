@@ -1,0 +1,14 @@
+// DashboardPage - Implementar según diseño del SDD
+import React from 'react';
+
+const DashboardPage = () => {
+  return (
+    <div>
+      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+      <p>Implementar funcionalidad según BDD y SDD</p>
+      {/* Resumen de cursos inscritos, estado de membresía, noticias destacadas */}
+    </div>
+  );
+};
+
+export default DashboardPage;
