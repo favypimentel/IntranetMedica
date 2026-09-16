@@ -1,12 +1,22 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface User {
+export interface DoctorProfile {
+  licenseNumber: string;
+  specialty: string;
+  institution?: string;
+  verified?: boolean;
+}
+
+export interface User {
   id: number;
   email: string;
   firstName: string;
   lastName: string;
   role: string;
+  phone?: string;
+  avatarUrl?: string;
+  doctor?: DoctorProfile;
 }
 
 interface AuthState {
@@ -16,7 +26,7 @@ interface AuthState {
   isAuthenticated: boolean;
   login: (user: User, token: string, refreshToken: string) => void;
   logout: () => void;
-  updateUser: (user: User) => void;
+  updateUser: (user: Partial<User>) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -42,8 +52,10 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: false
         });
       },
-      updateUser: (user) => {
-        set({ user });
+      updateUser: (updatedData) => {
+        set((state) => ({
+          user: state.user ? { ...state.user, ...updatedData } : null
+        }));
       }
     }),
     {

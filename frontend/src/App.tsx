@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // Pages
+import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
@@ -23,6 +24,10 @@ function App() {
     <Routes>
       {/* Rutas públicas */}
       <Route
+        path="/"
+        element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />}
+      />
+      <Route
         path="/login"
         element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />}
       />
@@ -34,7 +39,6 @@ function App() {
       {/* Rutas protegidas */}
       <Route element={<ProtectedRoute />}>
         <Route element={<Layout />}>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/courses" element={<CoursesPage />} />
           <Route path="/courses/:id" element={<CourseDetailPage />} />
@@ -46,7 +50,7 @@ function App() {
         </Route>
       </Route>
 
-      {/* 404 */}
+      {/* 404 Not Found */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
